@@ -1,12 +1,22 @@
+
+/*        Author: Ezaz Ahmed Sayem (Github: github.com/Codebaba-Ezaz       */
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class Ezaz_Motions extends GetxController {
   var buttonClicked = false.obs;
+  var menuClicked = false.obs;
 
   void toggleButton() {
     buttonClicked.value = !buttonClicked.value;
+    if (buttonClicked.value) {
+      menuClicked.value = false;
+    }
+  }
+
+  void toggleMenu() {
+    menuClicked.value = !menuClicked.value;
   }
 
   void resetButton() {
@@ -44,7 +54,6 @@ class EzazMid extends StatelessWidget {
               child: Obx(() => Stack(
                 alignment: Alignment.center,
                 children: [
-
                   Positioned(
                     bottom: size.height * 0.15,
                     right: size.width * 0.5 - 115,
@@ -80,19 +89,29 @@ class EzazMid extends StatelessWidget {
                   AnimatedPositioned(
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeInOut,
-                    top: controller.buttonClicked.value ? size.width * .50 : size.width * .46,
+                    top: controller.buttonClicked.value
+                        ? (controller.menuClicked.value ? size.width * .48 : size.width * .50)
+                        : size.width * .46,
+
+                    left: controller.buttonClicked.value
+                        ? (controller.menuClicked.value ? size.width * .2 : null): null,
+
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeInOut,
-                      width: controller.buttonClicked.value ? size.width * .80 : size.width * .48,
-                      height: controller.buttonClicked.value ? size.width * .80 : size.width * .48,
+                      width: controller.buttonClicked.value
+                          ? (controller.menuClicked.value ? size.width * .3 : size.width * .80)
+                          : size.width * .48,
+                      height: controller.buttonClicked.value
+                          ? (controller.menuClicked.value ? size.width * .8 : size.width * .80)
+                          : size.width * .48,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: controller.buttonClicked.value
                               ? [Colors.greenAccent, Colors.blueAccent]
                               : [Colors.blueAccent, Colors.greenAccent],
                         ),
-                        borderRadius: BorderRadius.circular(controller.buttonClicked.value ? 60 : 100),
+                        borderRadius: BorderRadius.circular(controller.buttonClicked.value ? 50 : 100),
                       ),
                       child: controller.buttonClicked.value
                           ? Center(
@@ -108,33 +127,49 @@ class EzazMid extends StatelessWidget {
                   AnimatedPositioned(
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeInOut,
-                    top: controller.buttonClicked.value ? size.width * .65 : size.width * .521,
-                    left: controller.buttonClicked.value ? size.width * .21 : size.width * .2749,
+                    top: controller.buttonClicked.value
+                        ? (controller.menuClicked.value ? size.width * .55 : size.width * .65)
+                        : (controller.menuClicked.value ? size.width * .521 : size.width * .521),
+                    left: controller.buttonClicked.value
+                        ? (controller.menuClicked.value ? size.width * .53 : size.width * .21)
+                        : size.width * .266,
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeInOut,
-
-                      width: controller.buttonClicked.value ? size.width * .50 : size.width * .36,
-                      height: controller.buttonClicked.value ? size.width * .50 : size.width * .36,
+                      width: controller.buttonClicked.value
+                          ? (controller.menuClicked.value ? size.width * .23 : size.width * .50)
+                          : size.width * .36,
+                      height: controller.buttonClicked.value
+                          ? (controller.menuClicked.value ? size.width * .30 : size.width * .50)
+                          : size.width * .36,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(controller.buttonClicked.value ? 20 : 100), // Change to square
+                        borderRadius: BorderRadius.circular(controller.buttonClicked.value
+                            ? (controller.menuClicked.value ? 30 : 20)
+                            : 100),
                         color: Colors.grey.shade500,
                       ),
                     ),
                   ),
 
-
                   // Third Circle
                   AnimatedPositioned(
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeInOut,
-                    top: controller.buttonClicked.value ? 220 : size.width * .566,
-                    right:controller.buttonClicked.value ?size.width * .15 :size.width * .31,
+                    top: controller.buttonClicked.value
+                        ? (controller.menuClicked.value ? size.width * .87 : 190)
+                        : (controller.menuClicked.value ? size.width * .566 : size.width * .566),
+                    right: controller.buttonClicked.value
+                        ? (controller.menuClicked.value ? size.width * .15 : size.width * .15)
+                        : (controller.menuClicked.value ? size.width * .31 : size.width * .31),
                     child: AnimatedContainer(
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeInOut,
-                      width: controller.buttonClicked.value ? size.width * .1 : size.width * .27,
-                      height: controller.buttonClicked.value ? size.width * .1 : size.width * .27,
+                      width: controller.buttonClicked.value
+                          ? (controller.menuClicked.value ? size.width * .2 : size.width * .1)
+                          : size.width * .27,
+                      height: controller.buttonClicked.value
+                          ? (controller.menuClicked.value ? size.width * .3 : size.width * .1)
+                          : size.width * .27,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
@@ -162,6 +197,25 @@ class EzazMid extends StatelessWidget {
                     ),
                   ),
 
+                  // Menu Icon
+                  AnimatedPositioned(
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                    top: 20, // Position at the top
+                    right: 20, // Position at the right
+                    child: GestureDetector(
+                      onTap: controller.toggleMenu, // Toggle menu state on tap
+                      child: AnimatedOpacity(
+                        opacity: controller.buttonClicked.value ? 1.0 : 0.0,
+                        duration: const Duration(milliseconds: 500),
+                        child: Icon(
+                          Icons.menu, // Menu icon
+                          size: 32, // Adjust the size as needed
+                          color: Colors.white, // Color of the icon
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               )),
             ),
